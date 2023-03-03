@@ -1,0 +1,29 @@
+<div class="forever-pop" style="z-index: 101; display: none;">
+	<div class="forever-wrap"><img src="{$mdym.logo}" alt="logo" class="logo">
+		<div class="title">截图保存二维码</div>
+		<div class="info-wrap">
+			<p>屏幕截图保存二维码<br>永久不丢失地址</p>
+			<img class="qrcode" src="{$mdym.qrcode}">
+			<div class="content">
+				<a href="{$mdym.yjurl}" target="_blank">{$mdym.yjurl}</a>
+				<div>
+					<span>永</span><span>久</span><span>地</span><span>址</span>
+				</div>
+			</div>
+		</div>
+		<p class="des"><img src="{$maccms.path}MDassets/img/triangle.png" alt="logo">近期严格审查线路，保存二维码即可隨時找到我们的地址
+		</p>
+		<p class="des"><img src="{$maccms.path}MDassets/img/triangle.png" alt="logo">下载APP应用享受完整功能，如无法开启软件，请卸载后重新安装
+		</p>
+	</div>
+	<div class="divide"></div> <i class="fas fa-times"></i>
+</div>
+<script>
+	$('.announce-wrap,.fa-times').click(function() {
+		if ($('.forever-pop').css("display") == "none") {
+			$('.forever-pop').show();
+		} else {
+			$('.forever-pop').hide();
+		}
+	});
+</script>

@@ -1,0 +1,21 @@
+					<header>
+						{include file="system/headtop"}
+						<div class="cube-tab-bar">
+							<a href="{:mac_url('vod/index')}" class="cube-tab {if$maccms.aid==10}cube-tab_active on{/if}"><i class=""></i>
+								<div>推荐</div>
+							</a>
+							<a href="{:mac_url('label/newtwo')}" class="cube-tab {if strpos($_SERVER["REQUEST_URI"],'newtwo')}cube-tab_active on{/if}"><i class=""></i>
+								<div>最新</div>
+							</a>
+							<a href="{:mac_url('label/hottwo')}" class="cube-tab {if strpos($_SERVER["REQUEST_URI"],'hottwo')}cube-tab_active on{/if}"><i class=""></i>
+								<div>排行</div>
+							</a>
+							{maccms:type ids="'.($mdym['type']['two']).'" order="asc" by="sort" id="vo" key="key"}
+							{maccms:type parent="'.$vo['type_id'].'"  order="asc" by="sort" id="vo2" key="key2"}
+							<a href="{:mac_url_type($vo2)}" class="cube-tab{if condition=" ($vo2.type_id eq $GLOBALS['type_id'] || $vo2.type_id eq $GLOBALS['type_pid'])"} cube-tab_active on{/if}"><i class=""></i>
+								<div>{$vo2.type_name}</div>
+							</a>
+							{/maccms:type}
+							{/maccms:type}
+						</div>
+					</header>

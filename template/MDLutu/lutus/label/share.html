@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="zh-Hans-CN">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=0,viewport-fit=cover">
+		<title>分享推广 - {$maccms.site_name}</title>
+		<meta name="keywords" content="分享推广 - {$maccms.site_keywords}">
+		<meta name="description" content="分享推广 - {$maccms.site_description}">
+		{include file="system/include"}
+	</head>
+	<body>
+		<div id="app">
+			<div id="container">
+				<div class="top-content">
+					<div onclick="javascript:history.back(-1);" class="btn"></div>
+					<h3>您的专属分享页面</h3>
+				</div>
+				<div class="main-content toptwo gray">
+					<div class="cube-scroll-wrapper">
+						<div class="cube-scroll-content">
+							<div class="cube-scroll-list-wrapper" style="min-height: 0px;">
+								<div class="img-content">
+									<div>
+										<img style="width:148px" src="/index.php/qrcode/index.html?url={$maccms.http_type}{$maccms.site_url}{:mac_url('user/reg')}?uid={$user.user_id}">
+										<p>我的邀请码: {$user.user_codes}</p>
+									</div>
+								</div>
+								<h4>推广并邀请好友注册账号立即获得以下优惠：</h4>
+								<div class="info-content">
+									<p class="title"><img src="{$maccms.path}MDassets/img/tag.png" alt="icon">推广注册
+									</p>
+									<p>推广并邀请好友注册账号可获得一日VIP会员</p>
+								</div>
+								<div class="info-content">
+									<p class="title"><img src="{$maccms.path}MDassets/img/tag.png" alt="icon">充值任务</p>
+									<p>好友通过你的邀请码之后将自动成为你的下级</p>
+									<p>下级如若充值，你将获得额外的VIP会员天数，下级越多获得的VIP会员天数越多</p>
+								</div>
+								<div class="info-content">
+									<p class="title"><img src="{$maccms.path}MDassets/img/tag.png" alt="icon">推广任务</p>
+									<p>持续分享可累计VIP会员天数，每成功邀请1人注册可获得一定的VIP会员天数。</p>
+									<div>
+										<p><img src="{$maccms.path}MDassets/img/share_tag.png" alt="icon">推广{$GLOBALS['config']['site']['site_invitenum_0']}人，VIP天数<span>{$GLOBALS['config']['site']['site_invitetime_0']}</span>
+										</p>
+										<p><img src="{$maccms.path}MDassets/img/share_tag.png" alt="icon">推广{$GLOBALS['config']['site']['site_invitenum_1']}人，VIP天数<span>{$GLOBALS['config']['site']['site_invitetime_1']}</span>
+										</p>
+										<p><img src="{$maccms.path}MDassets/img/share_tag.png" alt="icon">推广{$GLOBALS['config']['site']['site_invitenum_2']}人，VIP天数<span>{$GLOBALS['config']['site']['site_invitetime_2']}</span>
+										</p>
+										<p><img src="{$maccms.path}MDassets/img/share_tag.png" alt="icon">推广{$GLOBALS['config']['site']['site_invitenum_3']}人，VIP天数<span>{$GLOBALS['config']['site']['site_invitetime_3']}</span>
+										</p>
+										<p><img src="{$maccms.path}MDassets/img/share_tag.png" alt="icon">推广{$GLOBALS['config']['site']['site_invitenum_4']}人，VIP天数<span>{$GLOBALS['config']['site']['site_invitetime_4']}</span>
+										</p>
+										<p><img src="{$maccms.path}MDassets/img/share_tag.png" alt="icon">推广{$GLOBALS['config']['site']['site_invitenum_5']}人，VIP天数<span>{$GLOBALS['config']['site']['site_invitetime_5']}</span>
+										</p>
+									</div>
+									<p>请妥善保管自己的帐号与推广链接，如果更新或重装软件后帐号丢失，可以联系客服找回。</p>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div onclick="copyText()" class="form-btn" style="position: fixed; bottom: 4rem;z-index:9;max-width: 768px;">分享推广链结</div>
+				</div>
+			</div>
+			{include file="system/footer"}
+			<div id="share" style="display: none;">送你个福利视频软件，够义气吧！我的邀请码：{$user.user_codes}，{$maccms.http_type}{$maccms.site_url}{:mac_url('user/reg')}</div>
+			<script>
+				function copyText() {
+					var Url2 = document.getElementById("share").innerText;
+					var oInput = document.createElement('input');
+					oInput.value = Url2;
+					document.body.appendChild(oInput);
+					oInput.select();
+					document.execCommand("Copy");
+					oInput.className = 'oInput';
+					oInput.style.display = 'none';
+					layer.msg('复制成功，快去推广吧！');
+				}		
+			</script>
+		</div>
+	</body>
+</html>

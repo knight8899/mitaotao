@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="zh-Hans-CN">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=0,viewport-fit=cover">
+		<title>{$obj.actor_name}个人资料_{$obj.actor_name}演过的电视剧_{$obj.actor_name}电影全集-{$maccms.site_name}</title>
+		<meta name="keywords" content="{$obj.actor_name}个人资料,{$obj.actor_name}演过的电视剧,{$obj.actor_name}电影全集,{$obj.actor_name}最新电影,{$obj.actor_name}最新电视剧">
+		<meta name="description" content="{$maccms.site_name}演示站为你收集了{$obj.actor_name}个人资料包括了{$obj.actor_name}最新演过的电视剧,{$obj.actor_name}电影全集,以及{$obj.actor_name}图片剧照最近动态等信息希望你能喜欢。">
+		{include file="system/include"}
+	</head>
+	<body>
+		<div id="app">
+			<div id="container">
+				<div class="top-content">
+					<div onclick="javascript:history.back(-1);" class="btn"></div>
+					<h3>演员介绍</h3>
+				</div>
+				<div class="main-content" style="padding-top: 40px;">
+					<div class="cube-scroll-wrapper">
+						<div class="cube-scroll-content">
+							<div class="cube-scroll-list-wrapper" style="min-height: 717px; pointer-events: auto;">
+								<div class="video-group">
+									<div class="actor-info">
+										<div class="img" data-src="{$obj.actor_pic}" lazy="loaded" style="background-image: url({$obj.actor_pic});"></div>
+										<div class="info">
+											<p>{$obj.actor_name}</p>
+											<p>字母: {$obj.actor_letter}</p>
+										</div>
+										<div onclick="actorfavs({$obj.actor_id})" class="btn">收藏</div>
+									</div>
+								</div>
+								<div class="video-group">
+									<div class="title-content">
+										<h3>所有作品</h3>
+									</div>
+									<div>
+										<div class="video-wrap long">
+											{maccms:vod num="500" actor="'.$obj['actor_name'].'" order="desc" by="time"}
+											{include file="module/vodlistthree"}
+											{/maccms:vod}	
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			{include file="system/footer"}
+		</div>
+	</body>
+</html>

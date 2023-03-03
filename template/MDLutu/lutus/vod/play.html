@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="zh-Hans-CN">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=0,viewport-fit=cover">
+		<title>在线播放{$obj.vod_name} {$obj['vod_play_list'][$param['sid']]['urls'][$param['nid']]['name']} - 高清资源 - {$maccms.site_name}</title>
+		<meta name="keywords" content="{$obj.vod_name}{$obj['vod_play_list'][$param['sid']]['urls'][$param['nid']]['name']}免费在线观看,{$obj.vod_name}剧情介绍">
+		<meta name="description" content="{$obj.vod_name}{$obj['vod_play_list'][$param['sid']]['urls'][$param['nid']]['name']}免费在线观看,{$obj.vod_name}剧情介绍">
+		{include file="system/include"}
+	</head>
+	<body>
+		<div id="app">
+			<div id="container">
+				<div class="play-content">
+					<div class="play-wrapper">
+						{if condition="$obj.vod_level == '6'"}
+						{if condition="$GLOBALS['user']['group_id'] eq 1"}
+						<div class="videojs-content">
+							<div class="premiss-content">
+								<div class="content">
+									<div class="text">登入或注册观看完整影片！</div>
+									<a href="{:mac_url('user/login')}" class="btn">
+										登入注册
+									</a>
+								</div>
+								<div class="bg" style="background-image: url({:mac_url_img($obj.vod_pic)});"></div>
+							</div>
+						</div>
+						{elseif condition="$GLOBALS['user']['group_id'] eq 2"}
+						<div class="videojs-content">
+							<div class="premiss-content">
+								<div class="content">
+									<div class="text">升级<span class="gold">VIP</span>～抢先看完整影片！</div>
+									<a href="{:mac_url('label/payment')}" class="btn">
+										升级VIP
+									</a>
+								</div>
+								<div class="bg" style="background-image: url({:mac_url_img($obj.vod_pic)});"></div>
+							</div>
+						</div>
+						{elseif condition="$GLOBALS['user']['group_id'] eq 3"}
+						<div class="videojs-content">
+							<div class="video-js vjs-default-skin vjs-big-play-centered vjs-paused vjs-controls-enabled vjs-touch-enabled vjs-v7 vjs-user-active luPlayer-dimensions">
+								{$player_data}
+								{$player_js}
+							</div>
+						</div>
+						{/if}
+						{else}
+						<div class="videojs-content">
+							<div class="video-js vjs-default-skin vjs-big-play-centered vjs-paused vjs-controls-enabled vjs-touch-enabled vjs-v7 vjs-user-active luPlayer-dimensions">
+								{$player_data}
+								{$player_js}
+							</div>
+						</div>
+						{/if}
+						<div onclick="javascript:history.back(-1);" class="back"></div>
+					</div>
+				</div>
+				<div class="video-content">
+					<div class="cube-scroll-wrapper">
+						<div class="cube-scroll-content">
+							<div class="cube-scroll-list-wrapper">
+								<div class="video-group info">
+									<div class="title-content">
+										<h2>{$obj.vod_name}</h2>
+										<div class="right">
+											<div>简介</div>
+											<div class="btn btn-right"></div>
+										</div>
+									</div>
+									<div class="date">
+										{$obj.vod_time|date='Y/m/d',###} 发行
+									</div>
+									<div class="action-content">
+										<div class="video-action">
+											<div id="source" class="switch-btn line">
+												<div class="img"></div> 
+												<span>线路</span> 
+												<i id="icon" class="fas fa-angle-down"></i>
+											</div>
+											<div id="sourcetwo" class="switch-btn pixel">
+												<div class="img hd"></div> 
+												<span>选集</span> 
+												<i id="icontwo" class="fas fa-angle-down"></i>
+											</div>
+											<div class="btn-content">
+												<div class="btn report" onclick="MAC.Gbook.Report('编号【{$obj.vod_id}】名称【{$obj.vod_name}】不能观看请检查修复，页面地址' + location.href,'{$obj.vod_id}')">
+													<div class="img"></div>
+													<div class="text">举报</div>
+												</div>
+												<div onclick="favs({$obj.vod_id})" class="btn collect">
+													<div class="img"></div>
+													<div class="text">收藏</div>
+												</div>
+												<div class="btn share">
+													<div class="img"></div>
+													<div class="text">分享</div>
+												</div>
+											</div>
+										</div>
+										{maccms:foreach name="obj.vod_play_list" id="vo" key="key"}
+										<div id="content" class="line-content content {if condition='$param.sid eq $vo.sid'}show{else}hide{/if}" style="display: none;">
+											{maccms:foreach name="vo.urls" id="vo2"}								
+											<a {if condition="$param.sid eq $vo.sid && $param.nid eq $vo2.nid"}class="active"{/if} href="{:mac_url_vod_play($obj,['sid'=>$vo.sid,'nid'=>$vo2.nid])}">{$vo2.name}</a>
+											{/maccms:foreach}
+										</div>
+										{/maccms:foreach}
+										<div id="contenttwo" class="line-content" style="display: none;">
+											{maccms:foreach name="obj.vod_play_list" id="vo"}
+											<a class="{if$vo.player_info.from==$obj['vod_play_list'][$param['sid']]['player_info']['from']}active{/if}" {if$vo.player_info.from==$obj['vod_play_list'][$param['sid']]['player_info']['from']}href="javascript:;" class="playnow_info"{else}href="{:mac_url_vod_play($obj,['sid'=>$vo.sid,'nid'=>$param.nid])}"{/if}>	
+											{$vo.player_info.show}
+											</a>
+											{/maccms:foreach}
+										</div>
+										<script type="text/javascript">$(".content.hide").remove();</script>
+									</div>
+									{$mdym.playad}
+								</div>
+								{if$obj['vod_actor'] neq ''}
+								<div class="video-group">
+									<div class="title-content">
+										<h3>演出演员</h3>
+									</div>
+									<div>
+										<div class="cube-scroll-wrapper horizontal-wrap">
+											<div class="cube-scroll-content" >
+												<div class="cube-scroll-list-wrapper" style="min-height: 0px;">
+													<div class="video-wrap actor">
+														{maccms:actor name="'.$obj['vod_actor'].','.$obj['vod_director'].'" order="desc" by="time"}
+														<div class="col-style col-style-4 square">
+															<a href="{$vo|mac_url_actor_detail}" class="videoBox">
+																<div class="videoBox-content">
+																	<div class="videoBox-cover" style="background-image: url({:mac_url_img($vo.actor_pic)});"></div>
+																</div>
+																<div class="videoBox-info">
+																	<h4>{$vo.actor_name}</h4>
+																</div>
+															</a>
+															<div class="collectBox">
+																<div onclick="actorfavs({$vo.actor_id})" class="btn">
+																	收藏
+																</div>
+															</div>
+														</div>
+														{/maccms:actor}
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								{/if}
+								<div class="video-group">
+									<div class="title-content">
+										<h3>相关影片</h3>
+									</div>
+									<div>
+										<div class="video-wrap long" id="vodlist">
+											{maccms:vod num="12" type="current" order="desc" by="rnd"}
+											<div class="col-style col-style-2 vertical">
+												<div class="videoBox">
+													<div class="videoBox-content">
+														<a href="{:mac_url_vod_play($vo)}" class="videoBox-cover" style="background-image: url({:mac_url_img($vo.vod_pic)});"></a>
+														<div onclick="favs({$vo.vod_id})" class="collect"></div>
+														<div class="videoBox-bottom">
+															<div class="upload-time">{$vo.vod_time|date='Y/m/d',###}</div>
+														</div>
+														{if condition="$vo.vod_level eq '6'"}
+														<div class="video-tag vip">VIP</div>
+														{/if}
+													</div>
+													<div class="videoBox-info">
+														<h4>{$vo.vod_name}</h4>
+													</div>
+													<div class="actorBox">
+														<div class="actorBox-content"><span>{$vo.vod_actor}</span></div>
+													</div>
+												</div>
+											</div>
+											{/maccms:vod}
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="video-info">
+					<div class="top-inner-content">
+						<h3>简介</h3>
+						<div class="close"></div>
+					</div>
+					<div class="cube-scroll-wrapper">
+						<div class="cube-scroll-content">
+							<div class="cube-scroll-list-wrapper">
+								<div class="video-group">
+									<h3>{$obj.vod_name}</h3>
+									<div class="date">{$obj.vod_time|date='Y/m/d',###} 发行</div>
+									<div>类型:<span style="margin-right: 5px;">{$obj.type.type_name}</span></div>
+									<div>影片长度:{$obj.vod_duration|mac_default='00:00'}</div>
+									<div>标签:</div>
+									<div class="tag-content">
+										{$obj.vod_tag|mac_url_create='tag'}
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			{include file="system/footer"}
+			<script>
+				$('.share').click(function() {
+					MaDouYm.setCopy(
+						"送你个福利视频软件，够义气吧！,{if$maccms.aid==14}{$maccms.http_type}{$maccms.site_url}{:mac_url_vod_detail($obj)}{else}{$maccms.http_type}{$maccms.site_url}{:mac_url_vod_play($obj,['sid'=>$param['sid'],'nid'=>$param['nid']])}{/if}",
+						"分享链接")
+				});
+				$(function() {
+					MaDouYm.play()
+				})
+				$("#menu a:eq(0)").toggleClass("active");
+			</script>
+			<span style="display:none" class="mac_ulog_set" alt="设置播放页浏览记录" data-type="4" data-mid="{$maccms.mid}" data-id="{$obj.vod_id}" data-sid="{$param.sid}" data-nid="{$param.nid}"></span>
+			<span style="display:none" class="mac_history_set" alt="设置视频历史记录" data-name="[{$obj.type.type_name}]{$obj.vod_name}" data-pic="{$obj.vod_pic|mac_url_img}"></span>
+		</div>
+	</body>
+</html>

@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="zh-Hans-CN">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=0,viewport-fit=cover">
+		<title>变更密码 - {$maccms.site_name}</title>
+		<meta name="keywords" content="{$maccms.site_keywords}">
+		<meta name="description" content="{$maccms.site_description}">
+		{include file="system/include"}
+	</head>
+	<body>
+		<div id="app">
+			<div id="containertwo">
+				<div class="top-content">
+					<div onclick="javascript:history.back(-1);" class="btn"></div>
+					<h3>变更密码</h3>
+				</div>
+				<div class="main-content toptwo">
+					<form method="POST" id="fm">
+						<div class="form-content">
+							<div>旧密码</div>
+							<input type="password" id="user_pwd" name="user_pwd" autocomplete="current-password" minlength="6" placeholder="请输入密码(6位以上)"
+							 required="required">
+							<div>新密码</div>
+							<input type="password" id="user_pwd1" name="user_pwd1" autocomplete="new-password" minlength="6" placeholder="请输入密码(6位以上)"
+							 required="required">
+							<div>确认密码</div>
+							<input type="password" id="user_pwd2" name="user_pwd2" autocomplete="new-password" minlength="6" placeholder="请再次输入您的密码"
+							 required="required">
+							<div>找回密码问题</div>
+							<input type="text" id="user_question" name="user_question" value="{$obj.user_question}" placeholder="找回密码问题"
+							 required="required">
+							<div>找回密码答案</div>
+							<input type="text" id="user_answer" name="user_answer" value="{$obj.user_answer}" placeholder="请找回密码答案" required="required">
+							<input type="button" id="btn_submit" class="form-btn" value="立即保存">
+						</div>
+					</form>
+					<div class="form-bottom-content">
+						<a>不修改请留空</a>
+					</div>
+				</div>
+			</div>
+			{include file="system/footer"}
+			<script type="text/javascript">
+				$('.btn_unbind').click(function() {
+					var ac = $(this).attr('ac');
+					if (ac != 'email' && ac != 'phone') {
+						layer.msg('参数错误');
+					}
+					if (confirm('确认解除绑定吗？此操作不可恢复？')) {
+						$.ajax({
+							url: "{:url('user/unbind')}",
+							type: "post",
+							dataType: "json",
+							data: {
+								ac: ac
+							},
+							beforeSend: function() {
+								//开启loading
+							},
+							success: function(r) {
+								layer.msg(r.msg);
+								if (r.code == 1) {
+									location.href = "{:url('user/info')}";
+								}
+							},
+							complete: function() {
+								//结束loading
+							}
+						});
+					}
+				});
+
+				$("#btn_submit").click(function() {
+					if ($('#user_pwd').val() == '') {
+						layer.msg('请输入旧密码');
+						$("#user_pwd").focus();
+						return false;
+					}
+
+
+					var data = $("#fm").serialize();
+					$.ajax({
+						url: "{:url('user/info')}",
+						type: "post",
+						dataType: "json",
+						data: data,
+						beforeSend: function() {
+							//开启loading
+							//$(".loading_box").css("display","block");
+							$("#btn_submit").val("loading...");
+						},
+						success: function(r) {
+							layer.msg(r.msg);
+							if (r.code == 1) {
+								location.href = "{:url('user/info')}";
+							}
+						},
+						complete: function() {
+							//结束loading
+							//$(".loading_box").css("display","none");
+							$("#btn_submit").val("提交");
+						}
+					});
+				});
+			</script>
+		</div>
+	</body>
+</html>

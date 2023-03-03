@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="zh-Hans-CN">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=0,viewport-fit=cover">
+		<title>{$maccms.site_name}-明星库</title>
+		<meta name="keywords" content="{$maccms.site_keywords}">
+		<meta name="description" content="{$maccms.site_description}">
+		{include file="system/include"}
+		
+	</head>
+	<body>
+		<div id="app">
+			<div id="container">
+				<div class="tab-wrapper">
+					<header>
+						{include file="system/headtop"}
+						<div class="cube-tab-bar">
+							<a href="{:mac_url('actor/index')}" class="cube-taber cube-tab_active on"><i class=""></i>
+								<div>演员列表</div>
+							</a>
+							<a href="{:mac_url('label/sort')}" class="cube-taber"><i class=""></i>
+								<div>长片分类</div>
+							</a>
+							<a href="{:mac_url('label/sorttwo')}" class="cube-taber"><i class=""></i>
+								<div>短片分类</div>
+							</a>
+						</div>
+					</header>
+					<div class="main-content top">
+						<div class="cube-slide">
+							<div class="cube-slide-group">
+								<div class="cube-slide-item">
+									<div class="cube-scroll-wrapper pageScroll">
+										<div class="cube-scroll-content">
+											<div class="cube-scroll-list-wrapper" style="min-height: 677px;">
+											
+												<div class="filter-wrap scrollStop">
+												
+													<div class="cube-scroll-wrapper horizontal-scroll">
+														<div class="cube-scroll-content">
+															<div class="cube-scroll-list-wrapper" style="min-height: 0px;">
+																<ul class="filter-list">
+																	<a class="active" data-name="scroll-aorder">最新排行</a>
+																	<a href="{:mac_url('actor/show',['id'=>3,'by'=>hits])}" class="" data-name="scroll-aorder">人气排行</a>
+																</ul>
+															</div>
+														</div>
+													</div>
+													<div class="cube-scroll-wrapper horizontal-scroll">
+														<div class="cube-scroll-content">
+															<div class="cube-scroll-list-wrapper" style="min-height: 0px;">
+																<ul class="filter-list">
+																	<a href="{:mac_url('actor/show',['area'=>$param['area'],'sex'=>$param['sex'],'blood'=>$param['blood'],'starsign'=>$param['starsign']])}" {if condition="$param['letter'] ==''"}class="active"{/if}>字母排序</a>
+																	{maccms:foreach name=":explode(',','A,B,C,D,E,F,G')" id="vo2" key="key2"}
+																	<a href="{:mac_url('actor/show',['area'=>$param['area'],'sex'=>$param['sex'],'blood'=>$param['blood'],'starsign'=>$param['starsign'],'id'=>3,'letter'=>$vo2])}" {if condition="$param['letter'] eq $vo2"}class="active"{/if} data-name="scroll-cup">{$vo2}</a>
+																	{/maccms:foreach}
+																	
+																</ul>
+															</div>
+															<!---->
+														</div>
+														<!---->
+													</div>
+													<!---->
+												</div>
+												<div class="video-group">
+													<div class="video-wrap actor">
+														{maccms:actor num="100" order="desc" by="hits"}
+														<div class="col-style col-style-4 square">
+															<a href="{$vo|mac_url_actor_detail}" class="videoBox">
+																<div class="videoBox-content">
+																	<div class="videoBox-cover" style="background-image: url({:mac_url_img($vo.actor_pic)});"></div>
+																</div>
+																<div class="videoBox-info">
+																	<h4>{$vo.actor_name}</h4>
+																</div>
+															</a>
+															<div onclick="actorfavs({$vo.actor_id})" class="collectBox">
+																<div class="btn">
+																	收藏
+																</div>
+															</div>
+														</div>
+														{/maccms:actor}
+														
+													</div>
+												</div>
+											</div>
+											<div class="cube-pullup-wrapper">
+												<div class="before-trigger"><span></span></div>
+											</div>
+										</div>
+										
+									</div>
+								</div>
+								
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			{include file="system/footer"}
+		</div>
+	</body>
+</html>

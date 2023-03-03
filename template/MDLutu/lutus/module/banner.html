@@ -1,0 +1,24 @@
+<div class="mix-wrapper">
+	<div class="cube-slide slideAd long scrollStop">
+		<div class="swiper-wrapper">
+			{maccms:website order="desc"}
+			<div class="cube-slide-item swiper-slide">
+				<a href="{$vo.website_jumpurl}" target="_blank" rel="noopener noreferrer" class="ga-ad content">
+					<div class="cover" data-src="{:mac_url_img($vo.website_logo)}" lazy="loaded" style="background-image: url({:mac_url_img($vo.website_logo)});"></div>
+					<h4 class="title">{$vo.website_name}</h4>
+				</a>
+			</div>
+			{/maccms:website}
+			{maccms:vod type="'.($mdym['type']['one']).'" by="time" order="desc" level="9"}
+			<div class="cube-slide-item swiper-slide">
+				<a href="{:mac_url_vod_play($vo)}" target="_blank" rel="noopener noreferrer" class="ga-ad content">
+					<div class="cover" data-src="{:mac_url_img($vo.vod_pic)}" lazy="loaded" style="background-image: url({:mac_url_img($vo.vod_pic)});"></div>
+					<h4 class="title">{$vo.vod_name}</h4>
+				</a>
+			</div>
+			{/maccms:vod}
+		</div>
+		<div class="cube-slide-dots"></div>
+	</div>
+</div>
+

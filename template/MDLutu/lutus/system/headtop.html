@@ -1,0 +1,10 @@
+<div class="logo-content">
+	<img src="{$mdym.logo}" alt="logo">
+	<div class="right">
+		<div class="btn download">下载APP</div>
+		{if condition="$GLOBALS['user']['user_id']" gt 0}
+		{else/}
+		<a href="{:mac_url('user/login')}" class="btn">登入</a>
+		{/if}
+	</div>
+</div>

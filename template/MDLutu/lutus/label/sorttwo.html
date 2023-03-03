@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="zh-Hans-CN">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=0,viewport-fit=cover">
+		<title>短片分类 - {$maccms.site_name}</title>
+		<meta name="keywords" content="{$maccms.site_keywords}" />
+		<meta name="description" content="{$maccms.site_description}" />
+		{include file="system/include"}
+	</head>
+	<body>
+		<div id="app">
+			<div id="container">
+				<div class="tab-wrapper">
+					<header>
+						{include file="system/headtop"}
+						<div class="cube-tab-bar">
+							<a href="{:mac_url('actor/index')}" class="cube-taber"><i class=""></i>
+								<div>演员列表</div>
+							</a>
+							<a href="{:mac_url('label/sort')}" class="cube-taber"><i class=""></i>
+								<div>长片分类</div>
+							</a>
+							<a href="{:mac_url('label/sorttwo')}" class="cube-taber cube-tab_active on"><i class=""></i>
+								<div>短片分类</div>
+							</a>
+						</div>
+					</header>
+					<div class="main-content top">
+						<div class="cube-slide">
+							<div class="cube-slide-group">
+								<div class="cube-slide-item">
+									<div class="cube-scroll-wrapper pageScroll">
+										<div class="cube-scroll-content">
+											<div class="cube-scroll-list-wrapper" style="min-height: 677px;">
+												<div class="video-group">
+													<div class="video-wrap category">
+														{maccms:type ids="'.($mdym['type']['two']).'" order="asc" by="sort" id="vo" key="key"} 				  
+														{maccms:type parent="'.$vo['type_id'].'" order="asc" by="sort" id="vo2" key="key2"}
+														<a href="{:mac_url_type($vo2)}" class="col-style col-style-3 vertical">
+															<div class="videoBox">
+																<div class="videoBox-content">
+																	<div class="videoBox-cover" data-src="{:mac_url_img($vo2.type_pic)}" lazy="loaded" style="background-image: url({:mac_url_img($vo2.type_pic)});"></div>
+																</div>
+																<div class="videoBox-info">
+																	<h4>{$vo2.type_name}</h4>
+																</div>
+															</div>
+														</a>
+														{/maccms:type}
+														{/maccms:type}
+													</div>
+												</div>
+												<div class="video-group">
+													<div class="title-content">
+														<h3>其他热门标签</h3>
+													</div>
+													<div class="tag-content">
+														{maccms:vod order="desc" by="time" num="1000" ids="all" type="all"}
+														{if condition="$vo.vod_tag eq ''"}
+														{else}
+														{$vo.vod_tag|mac_url_create='tag'}
+														{/if}
+														{/maccms:vod}
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			{include file="system/footer"}
+		</div>
+	</body>
+</html>

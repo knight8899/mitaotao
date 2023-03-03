@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="zh-Hans-CN">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=0,viewport-fit=cover">
+		<title>卡密兑换 - {$maccms.site_name}</title>
+		<meta name="keywords" content="卡密兑换 - {$maccms.site_keywords}">
+		<meta name="description" content="卡密兑换 - {$maccms.site_description}">
+		{include file="system/include"}
+	</head>
+	<body>
+		<div id="app">
+			<div id="containertwo">
+				<div class="top-content">
+					<div onclick="javascript:history.back(-1);" class="btn"></div>
+					<h3>卡密兑换</h3>
+				</div>
+				<div class="main-content toptwo">
+					<form method="POST">
+						<div class="form-content">
+							<input type="text" name="card_no" placeholder="请输入兑换码" class="text-center">
+							
+							<input id="btn_submit_card" type="button" class="form-btn" value="马上兑换">
+						</div>
+						
+					</form>
+					<div class="form-bottom-content">
+						<p>	<a href="{$GLOBALS['config']['pay']['card']['url']}" style="color: #e85151;">点击购买卡密</a></p>
+					</div>
+				</div>
+			</div>
+			{include file="system/footer"}
+			<script>
+				$('#btn_submit_card').click(function(){
+					var that=$(this);
+					var no = $('input[name="card_no"]').val();
+					if(no==''){
+						layer.msg('请输入兑换码');
+						return;
+					}
+					layer.confirm('确定要使用充值卡充值吗？', {
+					title:'提示',btn: ['确定','取消']
+					}, function(){
+						$.ajax({
+							url: "{:url('user/buy')}",
+							type: "post",
+							dataType: "json",
+							data: {card_no: no,flag:'card'},
+							beforeSend: function () {
+								$("#btn_submit_card").val("loading...");
+							},
+							success: function (r) {
+								layer.msg(r.msg);
+							},
+							complete: function () {
+								$("#btn_submit_card").val("提交");
+							}
+						});
+					});
+				});
+			</script>
+		</div>
+	</body>
+</html>

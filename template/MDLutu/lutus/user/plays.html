@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="zh-Hans-CN">
+	<head>
+
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=0,viewport-fit=cover">
+		<title>观看纪录 - 会员中心 -{$maccms.site_name}</title>
+		<meta name="keywords" content="{$maccms.site_keywords}">
+		<meta name="description" content="{$maccms.site_description}">
+		{include file="system/include"}
+	</head>
+	<body>
+		<div id="app">
+			<div id="container" style="min-height:1080px;">
+				<div class="tab-wrapper">
+					<header>
+						<div class="top-content rel">
+							<div onclick="javascript:history.back(-1);" class="btn"></div>
+							<h3>观看纪录</h3>
+							<div id="edit" class="right-btn">
+								编辑
+							</div>
+							<div id="success" class="right-btn" style="display: none;">
+								完成
+							</div>
+						</div>
+						<div class="cube-tab-bar">
+							<div class="cube-taber cube-tab_active on"><i class=""></i>
+								<div>长片</div>
+							</div>
+							<div class="cube-taber"><i class=""></i>
+								<div>短片</div>
+							</div>
+						</div>
+					</header>
+					<div class="main-content top">
+						<div class="cube-slide">
+							<div class="cube-slide-group">
+								<div class="cube-slide-item">
+									<div class="cube-scroll-wrapper pageScroll">
+										<div class="cube-scroll-content">
+											<div class="cube-scroll-list-wrapper" style="min-height: 0px;">
+												{if condition="$__PAGING__.record_total gt 0"}
+												<div class="video-group">
+													<div class="list-content">
+														{volist name="list" id="vo"}
+														{if condition="$vo.ulog_mid eq 1"}
+														{maccms:vod order="desc" by="time" ids="'.$vo['ulog_rid'].'" type="1" id="vo1" key="key1"}
+														<div class="video-list">
+															<label class="check-content" style="display: none;">
+															<input name="ids[]" type="checkbox" value="{$vo.ulog_id}">
+															<span class="checkmark"></span>
+															</label>
+															<a href="{$vo.data.link}" class="video-des">
+																<div class="content-left" style="flex: 0 0 30px; display: none;"></div>
+																<div class="left">
+																	<div class="cover" style="background-image: url({:mac_url_img($vo1.vod_pic)});"></div>
+																</div>
+																<div class="right">
+																	<h4 class="title">{$vo1.vod_name}</h4>
+																	<p class="time">{$vo1.vod_duration}</p>
+																</div>
+																<div class="collect"></div>
+															</a>
+														</div>
+														{/maccms:vod}
+														{/if}
+														{/volist}
+													</div>
+												</div>
+												{else/}
+												<div class="no-data-content" style="position: fixed; height: calc(732px - 4rem);">
+													<img src="{$maccms.path}MDassets/img/oops.png" alt="opps">
+													<div class="info">
+														<p>您尚未观看任何影片，</p>
+														<p>快去观看精彩的内容！</p>
+														<div class="btn">看更多影片</div>
+													</div>
+												</div>
+												{/if}
+											</div>
+										</div>
+									</div>
+								</div>
+								
+								<div class="cube-slide-item" style="display: none">
+									<div class="cube-scroll-wrapper pageScroll">
+										<div class="cube-scroll-content">
+											<div class="cube-scroll-list-wrapper" style="min-height: 0px;">
+												{if condition="$__PAGING__.record_total gt 0"}
+												<div class="video-group">
+													<div class="list-content">
+														{volist name="list" id="vo"}
+														{if condition="$vo.ulog_mid eq 1"}
+														{maccms:vod order="desc" by="time" ids="'.$vo['ulog_rid'].'" type="2" id="vo1" key="key1"}
+														<div class="video-list">
+															<label class="check-content" style="display: none;">
+															<input name="ids[]" type="checkbox" value="{$vo.ulog_id}">
+															<span class="checkmark"></span>
+															</label>
+															<a href="{$vo.data.link}" class="video-des">
+																<div class="content-left" style="flex: 0 0 30px; display: none;"></div>
+																<div class="left">
+																	<div class="cover" style="background-image: url({:mac_url_img($vo1.vod_pic)});"></div>
+																</div>
+																<div class="right">
+																	<h4 class="title">{$vo1.vod_name}</h4>
+																	<p class="time">{$vo1.vod_duration}</p>
+																</div>
+																<div class="collect"></div>
+															</a>
+														</div>
+														{/maccms:vod}
+														{/if}
+														{/volist}
+													</div>
+												</div>
+												{else/}
+												<div class="no-data-content" style="position: fixed; height: calc(732px - 4rem);">
+													<img src="{$maccms.path}MDassets/img/oops.png" alt="opps">
+													<div class="info">
+														<p>您尚未观看任何影片，</p>
+														<p>快去观看精彩的内容！</p>
+														<div class="btn">看更多影片</div>
+													</div>
+												</div>
+												{/if}
+											</div>
+										</div>
+									</div>
+								</div>
+								
+							</div>
+						</div>
+					</div>
+					<div class="edit-content" style="display: none;z-index:10">
+						<div onClick="MAC.CheckBox.All('ids[]');" class="btn">全选</div> 
+						<div id="btnDel" class="btn">删除</div>
+					</div>
+				</div>
+			</div>
+			{include file="system/footer"}
+			<script>
+				function delData(ids,all){
+					var msg ='删除';
+					if(all==1){
+						msg='清空';
+					}
+						$.post("{:url('user/ulog_del')}",{ids:ids,type:4,all:all},function(data) {
+							if (data.code == '1') {
+								alert('删除成功');
+								location.reload();
+							}else {
+								alert('删除失败：' + data.msg);
+							}
+						}, 'json')
+				}
+				$("#btnClear").click(function(){
+					delData('',1);
+				});
+				$("#btnDel").click(function(){
+					var ids = MAC.CheckBox.Ids('ids[]');
+					if(ids==''){
+						alert("请至少选择一个数据");
+						return;
+					}
+					delData(ids,0);
+				});
+			</script>
+			<script type="text/javascript">
+				$(document).ready(function() {
+					$("#edit").click(function() {
+						$("#success").show();
+						$("#edit").hide();
+						$(".check-content").show();
+						$(".content-left").show();
+						$(".edit-content").show();
+					});
+
+				});
+				$(document).ready(function() {
+					$("#success").click(function() {
+						$("#edit").show();
+						$("#success").hide();
+						$(".check-content").hide();
+						$(".content-left").hide();
+						$(".edit-content").hide();
+					});
+
+				});
+			</script>
+			<script>
+				$('.cube-taber').click(function() {
+					var i = $(this).index();
+					$(this).addClass('cube-tab_active on').siblings().removeClass('cube-tab_active on');
+					$('.cube-slide-item').eq(i).show().siblings().hide();
+				});
+			</script>
+		</div>
+	</body>
+</html>

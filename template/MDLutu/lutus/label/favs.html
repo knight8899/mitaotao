@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="zh-Hans-CN">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=0,viewport-fit=cover">
+		<title>收藏中心</title>
+		<meta name="keywords" content="收藏中心">
+		<meta name="description" content="收藏中心">
+		{include file="system/include"}
+	</head>
+	<body>
+		<div id="app">
+			<div id="container">
+				<div class="tab-wrapper">
+					<header>
+						{include file="system/headtop"}
+						<div class="cube-tab-bar">
+							<div class="cube-taber cube-tab_active on"><i class=""></i>
+								<div>演员</div>
+							</div>
+							<div class="cube-taber"><i class=""></i>
+								<div>长片</div>
+							</div>
+							<div class="cube-taber"><i class=""></i>
+								<div>短片</div>
+							</div>
+						</div>
+					</header>
+					<div class="cube-popup cube-popup_mask cube-dialog" style="z-index: 100;" id="collect">
+						<div class="cube-popup-mask"></div>
+						<div class="cube-popup-container cube-popup-center">
+							<div class="cube-popup-content">
+								<div class="cube-dialog-main">
+									<div class="cube-dialog-confirm">
+										<h2 class="cube-dialog-title">
+											<div class="info-title">注册会员限定功能</div>
+										</h2>
+										<div class="cube-dialog-content">
+											<p class="info-des">请先登入或注册会员后即可使用此功能</p>
+										</div>
+										<div class="cube-dialog-btns border-right-1px">
+											<a href="/" class="cube-dialog-btn border-top-1px">取消</a>
+											<a href="{:mac_url('user/login')}" class="cube-dialog-btn border-top-1px cube-dialog-btn_highlight">即刻登入</a>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<script>
+						var popup_close = document.getElementById("popup_close");
+						var cube_popup_mask = document.getElementById("collect");
+						if (MAC.Cookie.Get('user_id') != undefined && MAC.Cookie.Get('user_id') != '') {
+							window.location.href = "{:mac_url('user/favs')}";
+						} else {
+							cube_popup_mask.style.display = 'block';
+						};
+					</script>
+				</div>
+			</div>
+			{include file="system/footer"}
+			<script>
+				$('.cube-taber').click(function() {
+					var i = $(this).index();
+					$(this).addClass('cube-tab_active on').siblings().removeClass('cube-tab_active on');
+					$('.cube-slide-item').eq(i).show().siblings().hide();
+				});
+			</script>
+		</div>
+	</body>
+</html>

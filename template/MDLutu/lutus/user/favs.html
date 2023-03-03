@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="zh-Hans-CN">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=0,viewport-fit=cover">
+		<title>收藏中心 - {$maccms.site_name}</title>
+		<meta name="keywords" content="{$maccms.site_keywords}">
+		<meta name="description" content="{$maccms.site_description}">
+		{include file="system/include"}
+	</head>
+	<body>
+		<div id="app">
+			<div id="container">
+				<div class="tab-wrapper">
+					<header>
+						{include file="system/headtop"}
+						<div class="cube-tab-bar">
+						    <a href="{:mac_url('user/favs')}" class="cube-taber cube-tab_active on"><i class=""></i>
+								<div>演员</div>
+							</a>
+					    	<a href="{:mac_url('user/favstwo')}" class="cube-taber"><i class=""></i>
+								<div>长片</div>
+							</a>
+							<a href="{:mac_url('user/favsthree')}" class="cube-taber"><i class=""></i>
+								<div>短片</div>
+							</a>
+							
+						</div>
+					</header>
+					<div class="main-content top">
+						<div class="cube-slide">
+							<div class="cube-slide-group">
+								<div class="cube-slide-item">
+									<div class="cube-scroll-wrapper pageScroll">
+										<div class="cube-scroll-content">
+											<div class="cube-scroll-list-wrapper" style="min-height: 677px;">
+												{if condition="$__PAGING__.record_total gt 0"}
+												<div class="video-group">
+													<div class="video-wrap actor">
+														{volist name="list" id="vo"}
+														{if condition="$vo.ulog_mid eq 8"}
+														{maccms:actor order="desc" by="time" ids="'.$vo['ulog_rid'].'" type="3" id="vo1" key="key1"}
+														<div class="col-style col-style-4 square">
+															<a href="{$vo1|mac_url_actor_detail}" class="videoBox">
+																<div class="videoBox-content">
+																	<div class="videoBox-cover" style="background-image: url({:mac_url_img($vo1.actor_pic)});"></div>
+																</div>
+																<div class="videoBox-info">
+																	<h4>{$vo1.actor_name}</h4>
+																</div>
+															</a>
+															<div onclick="delData({$vo.ulog_id},0)" class="collectBox">
+																<div class="btn collect">
+																	已收藏
+																</div>
+															</div>
+														</div>
+														{/maccms:actor}
+														{/if}
+														{/volist}
+													</div>
+												</div>
+												{else/}
+												<div class="no-data-content" style="position: fixed; height: calc(732px - 4rem);">
+													<img src="{$maccms.path}MDassets/img/oops.png" alt="opps">
+													<div class="info">
+														<p>收藏夹没有任何东西噢～</p>
+														<p>您还未收藏任何演员！</p>
+														<div class="btn">看更多演员</div>
+													</div>
+												</div>
+												{/if}
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			{include file="system/footer"}
+			<script>
+				function delData(ids, all) {
+					var msg = '删除';
+					if (all == 1) {
+						msg = '清空';
+					}
+					$.post("{:url('user/ulog_del')}", {
+						ids: ids,
+						type: 2,
+						all: all
+					}, function(data) {
+						if (data.code == '1') {
+							layer.msg("删除成功");
+							setTimeout("location.reload()", 3000);
+						} else {
+							layer.msg('删除失败：' + data.msg);
+						}
+					}, 'json')
+
+				}
+				$("#btnClear").click(function() {
+					delData('', 1);
+				});
+				$("#btnDel").click(function() {
+					var ids = MAC.CheckBox.Ids('ids[]');
+					if (ids == '') {
+						layer.msg('请至少选择一个数据');
+						return;
+					}
+					delData(ids, 0);
+				});
+			</script>
+			<script>
+				$("#menu a:eq(4)").removeClass("active");
+			</script>
+		</div>
+	</body>
+</html>

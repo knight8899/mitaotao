@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="zh-Hans-CN">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=0,viewport-fit=cover">
+		<title>{$param['ac_text']}找回密码 - {$maccms.site_name}</title>
+		<meta name="keywords" content="{$maccms.site_keywords}">
+		<meta name="description" content="{$maccms.site_description}">
+		{include file="system/include"}
+	</head>
+	<body>
+		<div id="app">
+			<div id="containertwo">
+				<div class="top-content">
+					<div onclick="javascript:history.back(-1);" class="btn"></div>
+					<h3>忘记密码</h3>
+				</div>
+				<div class="main-content toptwo">
+					<form method="POST" id="fm" action="">
+						<input type="hidden" name="ac" value="{$param['ac']}">
+							<div class="form-content">
+								<div>{$param['ac_text']}</div>
+								<input type="text" id="to" name="to" autocomplete="tel-national" placeholder="请输入您绑定的{$param['ac_text']}">
+								
+								<div>验证码</div>
+								<div class="form-sub-content">
+								<input type="text" id="verify" name="verify" placeholder="请输入验证码" required="required"> 
+								<img class="sm-btn" id="verify_img" src="{:url('verify/index')}" onClick="this.src=this.src+'?'" alt="单击刷新" />
+								</div>
+								<input type="button" id="btn_send" class="form-btn" value="发送验证码">
+							</div>
+						</form>
+						<form method="POST" id="fm" action="">
+						<input type="hidden" name="ac" value="email">
+							<div class="form-content">
+								<div>验证码</div>
+								<input type="text" id="code" name="code" autocomplete="tel-national" placeholder="请输入验证码">
+								
+								<div>验证码</div>
+								<input type="text" id="user_pwd" name="user_pwd" autocomplete="tel-national" placeholder="请输入新密码">
+								<div>验证码</div>
+								<input type="text" id="user_pwd2" name="user_pwd2" autocomplete="tel-national" placeholder="请输入确认密码">
+								
+								
+								<input type="button" id="btn_submit" class="form-btn" value="重置密码">
+							</div>
+						</form>
+					<div class="form-bottom-content">
+						<a href="{:url('user/findpass_msg')}?ac=email">邮箱找回</a>
+						<p>|</p>
+						<a href="{:url('user/findpass_msg')}?ac=phone">手机找回</a>
+					</div>
+				</div>
+			</div>
+			{include file="system/footer"}
+			<script type="text/javascript">
+				$(function() {
+				$("body").bind('keyup', function(event) {
+					if (event.keyCode == 13) {
+						$('#btnLogin').click();
+					}
+				});
+				$('#btn_send').click(function() {
+					if ($('#to').val() == '') {
+						layer.msg('请输入{$param["ac_text"]}');
+						$("#to").focus();
+						return false;
+					}
+
+					$.ajax({
+						url: "{:url('user/findpass_msg')}",
+						type: "post",
+						dataType: "json",
+						data: $('#fm').serialize(),
+						beforeSend: function() {
+							$("#btn_send").val("loading...");
+						},
+						success: function(r) {
+							layer.msg(r.msg);
+						},
+						complete: function() {
+							$('#verify').click();
+							$("#btn_send").val("发送邮件");
+						}
+					});
+				});
+
+				$('#btn_submit').click(function() {
+					if ($('#to').val() == '') {
+						layer.msg('请输入{$param["ac_text"]}');
+						$("#to").focus();
+						return false;
+					}
+					if ($('#code').val() == '') {
+						layer.msg('请输入验证码');
+						$("#code").focus();
+						return false;
+					}
+					if ($('#user_pwd').val() == '') {
+						layer.msg('请输入新密码');
+						$("#user_pwd").focus();
+						return false;
+					}
+					if ($('#user_pwd2').val() == '') {
+						layer.msg('请输入确认密码');
+						$("#user_pwd2").focus();
+						return false;
+					}
+					if ($('#user_pwd').val() != $('#user_pwd2').val()) {
+						layer.msg('二次密码不一致');
+						$("#user_pwd2").focus();
+						return false;
+					}
+
+					var data = {
+						ac: '{$param["ac"]}',
+						to: $('#to').val(),
+						code: $('#code').val(),
+						user_pwd: $('#user_pwd').val(),
+						user_pwd2: $('#user_pwd2').val()
+					};
+					$.ajax({
+						url: "{:url('user/findpass_reset')}",
+						type: "post",
+						dataType: "json",
+						data: data,
+						beforeSend: function() {
+							$("#btn_submit").val("loading...");
+						},
+						success: function(r) {
+							layer.msg(r.msg);
+						},
+						complete: function() {
+							$("#btn_submit").val("重置密码");
+						}
+					});
+				});
+			});
+
+			</script>
+		</div>
+		
+	</body>
+</html>

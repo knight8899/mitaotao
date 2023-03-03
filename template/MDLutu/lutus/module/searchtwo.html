@@ -1,0 +1,11 @@
+<div class="search-wrap">
+	<a href="{:mac_url('label/searchtwo')}" class="search-bar"><i class="fas fa-search"></i>
+		<span>{$mdym.search}</span>
+	</a>
+	{if$maccms.aid neq '1'&&$maccms.aid neq '7'&&$maccms.aid neq '10'}
+	<a href="{:mac_url('vod/show',['id'=>$obj['type_id']])}" class="btn">
+		<span>筛选</span>
+		<i class="fas fa-angle-down"></i>
+	</a>
+	{/if}
+</div>

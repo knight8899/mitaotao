@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="zh-Hans-CN">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=0,viewport-fit=cover">
+		<title>会员中心 - {$maccms.site_name}</title>
+		<meta name="keywords" content="{$maccms.site_keywords}">
+		<meta name="description" content="{$maccms.site_description}">
+		{include file="system/include"}
+	</head>
+	<body>
+		<div id="app">
+			<div id="container">
+				<div class="member-content">
+					<div class="member-wrap"><img src="{$maccms.path}MDassets/img/{if condition="$GLOBALS['user']['group_id'] eq 3"}m3{else}m2{/if}.png">
+						<div class="member">
+							<div>{$obj.group.group_name}</div>
+							<div onclick="location.reload();" class="img"></div>
+						</div>
+						{if condition="$GLOBALS['user']['group_id'] eq 3"}
+						<p> VIP期限：{$obj.user_end_time|mac_day|mac_default='无限期'} </p>
+						{else}
+						<p> 绑定手机＆推广分享获得更多VIP点数</p>
+						{/if}
+						<div class="content">
+							{if condition="$GLOBALS['user']['group_id'] eq 3"}
+							<a href="{:mac_url('label/payment')}" class="btn">续约VIP</a>
+							{else}
+							<a href="{:mac_url('label/payment')}" class="btn">升级VIP</a>
+							{/if}
+							<a href="{:mac_url('label/share')}" class="btn">推广分享</a>
+						</div>
+					</div>
+				</div>
+				<div class="main-content gray" style="padding-bottom: calc(4rem + env(safe-area-inset-bottom));">
+					<div class="cube-scroll-wrapper">
+						<div class="cube-scroll-content">
+							<div class="cube-scroll-list-wrapper">
+								<div class="list-content lc1">
+									<div>
+										<div>{$count}</div>
+										<p>邀请人数</p>
+									</div> 
+									<span class="line"></span>
+									<div class="">
+										<div id="user_day"></div>
+										<p id="user_time">剩余VIP天数</p>
+												
+									</div>
+								</div>
+								<div class="list-content">
+									<div class="list-item">
+										<div class="img i1"></div>
+										<div class="text">
+											帐号<span class="main-color">{$obj.user_name}</span>
+										</div>
+										<div class="right">
+											<a href="{:mac_url('user/logout')}"  class="btn">
+												退出
+											</a>
+										</div>
+									</div>
+									<a href="{:mac_url('label/share')}" class="list-item">
+										<div class="img i8"></div>
+										<div class="text">推广分享</div>
+										<div class="right"><span class="font-sub-color">推荐好友注册，VIP送给你！</span>
+											<div class="img"></div>
+										</div>
+									</a>
+
+									<a href="{:mac_url('user/buy')}" class="list-item">
+										<div class="img i14"></div>
+										<div class="text">卡密兑换</div>
+										<div class="right">
+											<div class="img"></div>
+										</div>
+									</a>
+									<a href="{:mac_url('label/payment')}" class="list-item">
+										<div class="img i13"></div>
+										<div class="text">升级VIP</div>
+										<div class="right">
+											<div class="img"></div>
+										</div>
+									</a>
+									
+									<a href="{:mac_url('user/ajax_info')}" class="list-item">
+										<div class="img i2"></div>
+										<div class="text">绑定帐号</div>
+										<div class="right"><span class="font-sub-color">{$obj.user_phone|mac_default='绑定帐号更安全，可多设备同步纪录'}</span>
+										
+											<div class="img"></div>
+										</div>
+									</a>
+									<a href="{:mac_url('user/info')}" class="list-item">
+										<div class="img i3"></div> 
+										<div class="text">变更密码</div>
+										<div class="right">
+										<div class="img"></div>
+										</div>
+									</a>
+									<a href="{:mac_url('user/plays')}" class="list-item">
+										<div class="img i15"></div>
+										<div class="text">观看纪录</div>
+										<div class="right">
+											<div class="img"></div>
+										</div>
+									</a>
+									<a href="{:mac_url('user/orders')}" class="list-item">
+										<div class="img i4"></div>
+										<div class="text">历史订单</div>
+										<div class="right">
+											<div class="img"></div>
+										</div>
+									</a> 
+									<a href="{$mdym.group}" target="_blank" rel="noopener noreferrer" class="list-item">
+										<div class="img i7"></div>
+										<div class="text">看片福利群</div>
+										<div class="right">
+											<div class="img"></div>
+										</div>
+									</a>
+									<a href="mailto:{$mdym.email}" target="_blank" rel="noopener noreferrer" class="list-item">
+										<div class="img i11"></div>
+										<div class="text">问题建议</div>
+										<div class="right"><span class="font-sub-color">{$mdym.email}</span>
+											<div class="img"></div>
+										</div>
+									</a>
+									<a href="{:mac_url('label/policy')}" class="list-item">
+										<div class="img i12"></div>
+										<div class="text">政策条款</div>
+										<div class="right">
+											<div class="img"></div>
+										</div>
+									</a>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<script>
+                function show() {
+					//获取目的日期
+					var myyear = {$obj.user_end_time|date='Y',###}; //年
+					var mymonth = {$obj.user_end_time|date='m',###} - 1; //月
+					var myday = {$obj.user_end_time|date='d',###}; //天
+					var myhour = {$obj.user_end_time|date='H',###};; //时
+					var time = Number(new Date(myyear, mymonth, myday, myhour));
+					//获取当前时间
+					var nowTime = Date.now();
+					//获取时间差
+					var timediff = Math.round((time - nowTime) / 1000);
+					//获取还剩多少天
+					var day = parseInt(timediff / 3600 / 24);
+					//获取还剩多少小时
+					var hour = parseInt(timediff / 3600 % 24);
+					//输出还剩多少时间
+                    if (day==0) {
+                        document.getElementById("user_day").innerHTML = hour;
+                        document.getElementById("user_time").innerHTML = "VIP剩余小时";
+                    } else{
+                        document.getElementById("user_day").innerHTML = day;
+                        document.getElementById("user_time").innerHTML = "VIP剩余天数";
+                    }
+                        setTimeout(show, 1000);
+                    if (timediff < 0) {
+                        document.getElementById("user_day").innerHTML = 0;
+                        }
+                    }
+                show();
+            </script>
+			{include file="system/footer"}
+		</div>
+		
+	</body>
+</html>

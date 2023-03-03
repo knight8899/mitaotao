@@ -1,0 +1,67 @@
+			<div id="menu">
+				<a href="/" class="menu-item long {if$maccms.aid==1}active{/if}">
+					<div class="img"></div>
+					<div class="text">长片</div>
+				</a>
+				<a href="{:mac_url('vod/index')}" class="menu-item short {if$maccms.aid==10}active{/if}">
+					<div class="img"></div>
+					<div class="text">短片</div>
+				</a>
+				<a href="{:mac_url('actor/index')}" class="menu-item category {if strpos($_SERVER["REQUEST_URI"],'actor')}active{/if}{if strpos($_SERVER["REQUEST_URI"],'sort')}active{/if}">
+					<div class="img"></div>
+					<div class="text">分类</div>
+				</a>
+				{if condition="$GLOBALS['user']['user_id']" gt 0}
+				<a href="{:mac_url('user/favs')}" class="menu-item collect {if strpos($_SERVER["REQUEST_URI"],'favs')}active{/if}">
+					<div class="img"></div>
+					<div class="text">收藏</div>
+				</a>
+				<a href="{:mac_url('user/index')}" class="menu-item member {if strpos($_SERVER["REQUEST_URI"],'user')}active{/if}">
+					<div class="img"></div>
+					<div class="text">我的</div>
+				</a>
+				{else}
+				<a href="{:mac_url('label/favs')}" class="menu-item collect {if strpos($_SERVER["REQUEST_URI"],'favs')}active{/if}">
+					<div class="img"></div>
+					<div class="text">收藏</div>
+				</a>
+				<a href="{:mac_url('label/user')}" class="menu-item member {if strpos($_SERVER["REQUEST_URI"],'user')}active{/if}">
+					<div class="img"></div>
+					<div class="text">我的</div>
+				</a>
+				{/if}
+				
+			</div>
+			{include file="module/popup"}
+			{include file="module/forever"}
+			{include file="module/gototop"}
+			{include file="module/dragger"}
+			<script src="{$maccms.path}MDassets/js/system.js"></script>
+			<script src="{$maccms.path}MDassets/js/layer.js"></script>
+			<script>
+				function favs(id){
+					var user_id ="{$user.user_id}";
+					$.get("/index.php/user/ajax_ulog/?ac=set&mid=1&id="+id+"&type=2",function(data){
+						if(data.msg=="获取成功"){
+        					layer.msg("已收藏,无需重复收藏！");
+        				}else if(data.msg=="保存成功!"){
+        					layer.msg("收藏成功");
+        				}else if(user_id=="0"){
+        					layer.msg('请先登录');
+        				}
+					},"json");
+				}
+				function actorfavs(id){
+					var user_id ="{$user.user_id}";
+					$.get("/index.php/user/ajax_ulog/?ac=set&mid=8&id="+id+"&type=2",function(data){
+						if(data.msg=="获取成功"){
+        					layer.msg("已收藏,无需重复收藏！");
+        				}else if(data.msg=="保存成功!"){
+        					layer.msg("收藏成功");
+        				}else if(user_id=="0"){
+        					layer.msg('请先登录');
+        				}
+					},"json");
+				}
+			</script>
+			<div style="display: none;">{$maccms.site_tj}</div>

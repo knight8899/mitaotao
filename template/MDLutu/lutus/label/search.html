@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="zh-Hans-CN">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=0,viewport-fit=cover">
+		<title>{$param.wd}{$param.actor}{$param.director}{$param.area}{$param.lang}{$param.year}{$param.class}搜索中心 - {$maccms.site_name}</title>
+		<meta name="keywords" content="{$param.wd}{$param.actor}{$param.director}{$param.area}{$param.lang}{$param.year}{$param.class}搜索中心" />
+		<meta name="description" content="{$param.wd}{$param.actor}{$param.director}{$param.area}{$param.lang}{$param.year}{$param.class}搜索中心" />
+		{include file="system/include"}
+	</head>
+	<body>
+		<div id="app">
+			<div id="container">
+				<div class="main-content search">
+					<div class="cube-scroll-wrapper">
+						<div class="cube-scroll-content">
+							<div class="cube-scroll-list-wrapper" style="min-height: 0px; pointer-events: auto;">
+								<form id="search" name="search" method="get" action="{:mac_url('vod/search')}" onSubmit="return qrsearch(this);">
+								<div class="search-wrap search">
+									<div class="search-bar search">
+										<input class="search" type="search" id="wd" name="wd" placeholder="{$mdym.search}">
+									</div>
+									<div onClick="javascript:history.back(-1);" class="btn search" style="padding: 0 0px;border: 0px solid;">
+										取消
+									</div>
+								</div>
+								</form>
+								<div class="video-group history">
+									<div class="title-content">
+										<h3>历史搜索</h3>
+										<div onClick="removeItem()" class="right">
+											<div class="trash search"></div>
+											<div>清空</div>
+										</div>
+									</div>
+									<ul class="search" id="history_wd"></ul>
+								</div>
+								<div class="video-group long">
+									<div class="title-content">
+										<h3>热搜长片</h3>
+									</div>
+									<ul>
+										{maccms:vod num="10" type="'.($mdym['type']['one']).'" order="desc" by="hits"}
+										<a href="{:mac_url_vod_play($vo)}" class="search">
+											<p class="num search">{$key}</p>
+											<p class="name search">{$vo.vod_name}</p>
+										</a>
+										{/maccms:vod}
+									</ul>
+								</div>
+								<div class="video-group short">
+									<div class="title-content">
+										<h3>热搜短片</h3>
+									</div>
+									<ul>
+										{maccms:vod num="10" type="'.($mdym['type']['two']).'" order="desc" by="hits"}
+										<a href="{:mac_url_vod_play($vo)}" class="search">
+											<p class="num search">{$key}</p>
+											<p class="name search">{$vo.vod_name}</p>
+										</a>
+										{/maccms:vod}
+										
+									</ul>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			{include file="system/footer"}
+			<script>
+				function removeItem() {
+						localStorage.removeItem('wd');
+						location.reload();
+				};
+				function qrsearch(e) {
+					var wd = $("#wd").val();
+					var data = [];
+					var history_wd = localStorage.getItem("wd");
+					if (history_wd == null) {
+						data = [{
+							'wd': wd
+						}];
+					} else {
+						data = JSON.parse(history_wd)
+						var json = {
+							'wd': wd
+						};
+						data.push(json);
+						data = MaDouYm.unique(data, 'wd')
+					};
+					localStorage.setItem("wd", JSON.stringify(data));
+				};
+				var history_wd = JSON.parse(localStorage.getItem("wd"));
+				if (history_wd == null) {
+					$('#history_wd').html('<div>没有搜寻纪录</div>');
+				} else {
+					var html = ''
+					for (var i = 0; i < history_wd.length; i++) {
+						var vo = history_wd[i];
+						html += '<a class="search" style="color: #000000;" href="' + maccms.path + '/index.php/vod/search.html?wd=' + vo.wd + '">' + vo.wd +
+							'</a>';
+					};
+					html += '';
+					$('#history_wd').html(html);
+				}
+			</script>
+		</div>
+	</body>
+</html>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="zh-Hans-CN">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=0,viewport-fit=cover">
+		<title>最新{$obj.type_title}-推荐{$obj.type_title}-第{$param.page}页 - {$maccms.site_name}</title>
+		<meta name="keywords" content="{$obj.type_key}">
+		<meta name="description" content="{$obj.type_des}">
+		{include file="system/include"}
+	</head>
+	<body>
+		<div id="app">
+			<div id="container">
+				<div class="tab-wrapper">
+					{include file="system/headertwo"}
+					<div class="main-content top">
+						<div class="cube-slide">
+							<div class="cube-slide-group">
+								<div class="cube-slide-item">
+									<div class="cube-scroll-wrapper pageScroll">
+										<div class="cube-scroll-content">
+											<div class="cube-scroll-list-wrapper" style="min-height: 677px;">
+												{include file="module/searchtwo"}
+												{include file="module/announce"}
+												<div class="video-group">
+													{include file="module/bannertwo"}
+													<div class="video-wrap long" id="content">
+														{maccms:vod num="20" paging="yes" pageurl="vod/type" order="desc" by="time"}
+														{include file="module/vodlisttwo"}
+														{/maccms:vod}
+													</div>
+													{include file="module/more"}
+												</div>
+											</div>
+											{include file="module/gone"}
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			{include file="system/footer"}
+			<script>
+				$("#menu a:eq(1)").addClass("active");
+			</script>
+		</div>
+	</body>
+</html>

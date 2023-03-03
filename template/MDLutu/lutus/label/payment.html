@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="zh-Hans-CN">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=0,viewport-fit=cover">
+		<title>升级VIP - {$maccms.site_name}</title>
+		<meta name="keywords" content="升级VIP - {$maccms.site_keywords}">
+		<meta name="description" content="升级VIP - {$maccms.site_description}">
+		{include file="system/include"}
+	</head>
+	<body>
+		<div id="app">
+			<div id="container">
+				<div class="top-content">
+					<div onclick="javascript:history.back(-1);" class="btn"></div>
+					<h3>升级VIP</h3>
+				</div>
+				<div class="main-content toptwo gray" style="padding: 40px 15px 4rem;font-family: initial">
+					<div class="cube-scroll-wrapper">
+						<div class="cube-scroll-content">
+							<div class="cube-scroll-list-wrapper" style="min-height: 0px; pointer-events: auto;">
+								<h2>升级VIP立即全站高清无限看</h2>
+								<h4 class="text-blink" style="padding: 0 5px;line-height: 1.333;text-align: center;color: #e85151;font-size: 1rem;">※先到先得快来抢购吧！</h4>
+								<ul class="pkg-lists">
+									<li>
+										<div class="pkg-list">
+											<div class="name">
+												<div class="leftSide">
+													<div class="dollar">体验会员</div>
+													<div class="info">
+														 时限1天，临时VIP 
+													</div>
+												</div>
+											</div> 
+											<span class="strong">{$GLOBALS['config']['site']['site_point_0']}</span> 
+											<span class="up-btn" data-time="{$GLOBALS['config']['site']['site_time_0']}" data-id="1" data-name="VIP会员" data-points="{$GLOBALS['config']['site']['site_point_0']}">升级</span>
+											<span class="tag first-tag">活动</span>
+										</div>
+									</li>
+									<li>
+										<div class="pkg-list">
+											<div class="name">
+												<div class="leftSide">
+													<div class="dollar">包月方案</div>
+													<div class="info">
+														{$GLOBALS['config']['site']['site_time_1']}天无限看
+													</div>
+												</div>
+											</div> 
+											<span class="strong">{$GLOBALS['config']['site']['site_point_1']}</span> 
+											<span class="up-btn" data-time="{$GLOBALS['config']['site']['site_time_1']}" data-id="1" data-name="VIP会员" data-points="{$GLOBALS['config']['site']['site_point_1']}">升级</span>
+											<span class="tag hot-tag">热门</span>
+										</div>
+									</li>
+									<li>
+										<div class="pkg-list">
+											<div class="name">
+												<div class="leftSide">
+													<div class="dollar">半年方案</div>
+													<div class="info">
+														{$GLOBALS['config']['site']['site_time_2']}天无限看
+													</div>
+												</div>
+											</div> 
+											<span class="strong">{$GLOBALS['config']['site']['site_point_2']}</span> 
+											<span class="up-btn" data-time="{$GLOBALS['config']['site']['site_time_2']}" data-id="1" data-name="VIP会员" data-points="{$GLOBALS['config']['site']['site_point_2']}">升级</span>
+											<span class="tag return-tag">最佳</span>
+										</div>
+									</li>
+									
+									<li>
+										<div class="pkg-list">
+											<div class="name">
+												<div class="leftSide">
+													<div class="dollar">包年方案</div>
+													<div class="info" style="color: rgb(232, 81, 81);">
+														{$GLOBALS['config']['site']['site_time_3']}天无限看
+													</div>
+												</div>
+											</div> 
+											<span class="strong">{$GLOBALS['config']['site']['site_point_3']}</span> 
+											<span class="up-btn" data-time="{$GLOBALS['config']['site']['site_time_3']}" data-id="1" data-name="VIP会员" data-points="{$GLOBALS['config']['site']['site_point_3']}">升级</span>
+											<span class="tag a-steal-tag">超值</span>
+										</div>
+									</li>
+								</ul>
+								<p class="text-blink1 first">付款超过十分钟但VIP方案仍未开通吗？</p>
+								<p class="mailto">欢迎联系客服申诉：<span><a href="mailto:{$mdym.email}">点击此处</a></span></p>
+								<p class="text-blink1">
+									(请您截图交易明细并上传图片,我们将在一个工作日内替您开通方案)
+								</p>
+								<div class="des">
+									<p class="title">安心购买</p>
+									<p>1.在帐单上，并不会显示您所使用的服务或网站名称</p>
+									<p>
+										2.会员资料及线上交易之信息，采用最高SSL加密技术为使用者资料及线上交易安全做把关，网站资安，安全无虞。
+									</p>
+									<p>
+										3.支付后系统将会自动开通，所有消费明细在您的订单记录可以查看，若有问题请联系客服！
+									</p>
+								</div>
+								<div class="boxes">
+									<div class="box">
+										<div class="bg b1"></div>
+										<p>天天更新<br>全站无限看</p>
+									</div>
+									<div class="box">
+										<div class="bg b2"></div>
+										<p>线路切换<br>看片快一步</p>
+									</div>
+									<div class="box">
+										<div class="bg b3"></div>
+										<p>高清画质<br>细节不错过</p>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			{include file="system/footer"}
+			<script>
+				$('.up-btn').click(function(){
+				var that=$(this);
+						var group_id = that.attr('data-id');
+						var group_name = that.attr('data-name');
+						var group_time = that.attr('data-time');
+						var points = that.attr('data-points');
+						if(confirm('确定要充值【'+group_time+'】天VIP吗,需要花费￥【'+points+'】')) {
+							$.ajax({
+								url: "{:url('user/buy')}",
+								type: "post",
+								dataType: "json",
+								data: {price: points,flag:'pays',group_id:group_id,group_time:group_time},
+								beforeSend: function () {
+									$("#btn_submit_pay").css("background","#fd6a6a").val("loading...");
+								},
+								success: function (r) {
+									if (r.code == 1) {
+										location.href="{:url('user/pay')}?order_code=" + r.data.order_code;
+									}
+									else{
+										alert(r.msg);
+									}
+								},
+								complete: function () {
+									$("#btn_submit_pay").css("background","#fa4646").val("提交");
+								}
+							});
+						}
+					});
+			</script>
+		</div>
+	</body>
+</html>

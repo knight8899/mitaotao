@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="zh-Hans-CN">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=0,viewport-fit=cover">
+		<title>绑定账号 - {$maccms.site_name}</title>
+		<meta name="keywords" content="{$maccms.site_keywords}">
+		<meta name="description" content="{$maccms.site_description}">
+		{include file="system/include"}
+	</head>
+	<body>
+		<div id="app">
+			<div id="containertwo">
+				<div class="top-content">
+					<div onclick="javascript:history.back(-1);" class="btn"></div>
+					<h3>绑定账号</h3>
+				</div>
+				<div class="main-content toptwo">
+					<form method="POST" id="fm">
+						<div class="form-content">
+							<div>手机号</div>
+							<div class="form-sub-content">
+								{if condition="$obj.user_phone neq ''"}
+								<input type="text" name="user_phone" value="{$obj.user_phone}" readonly="readonly" required="required">
+								<a href="javascript:;" class="sm-btn active btn_unbind" ac="phone">解绑</a>
+								{else/}
+								<input type="text" name="user_phone" value="{$obj.user_phone}" readonly="readonly" required="required">
+								<a href="{:url('user/bind')}?ac=phone" class="sm-btn active">绑定</a>
+								{/if}
+							</div>
+							<div>邮箱号</div>
+							<div class="form-sub-content">
+								{if condition="$obj.user_email neq ''"}
+								<input type="text" name="user_email" value="{$obj.user_email}" readonly="readonly" required="required">
+								<a href="javascript:;" class="sm-btn active btn_unbind" ac="email">解绑</a>
+								{else/}
+								<input type="text" name="user_email" value="{$obj.user_email}" readonly="readonly" required="required">
+								<a href="{:url('user/bind')}?ac=email" class="sm-btn active">绑定</a>
+								{/if}
+							</div>
+							<input type="button" id="btn_submit" class="form-btn" value="立即保存">
+						</div>
+					</form>
+				</div>
+			</div>
+			{include file="system/footer"}
+			<script type="text/javascript">
+				$('.btn_unbind').click(function() {
+					var ac = $(this).attr('ac');
+					if (ac != 'email' && ac != 'phone') {
+						layer.msg('参数错误');
+					}
+					if (confirm('确认解除绑定吗？此操作不可恢复？')) {
+						$.ajax({
+							url: "{:url('user/unbind')}",
+							type: "post",
+							dataType: "json",
+							data: {
+								ac: ac
+							},
+							beforeSend: function() {
+								//开启loading
+							},
+							success: function(r) {
+								layer.msg(r.msg);
+								if (r.code == 1) {
+									location.href = "{:url('user/info')}";
+								}
+							},
+							complete: function() {
+								//结束loading
+							}
+						});
+					}
+				});
+
+				$("#btn_submit").click(function() {
+					if ($('#user_pwd').val() == '') {
+						layer.msg('请输入旧密码');
+						$("#user_pwd").focus();
+						return false;
+					}
+
+
+					var data = $("#fm").serialize();
+					$.ajax({
+						url: "{:url('user/info')}",
+						type: "post",
+						dataType: "json",
+						data: data,
+						beforeSend: function() {
+							//开启loading
+							//$(".loading_box").css("display","block");
+							$("#btn_submit").val("loading...");
+						},
+						success: function(r) {
+							layer.msg(r.msg);
+							if (r.code == 1) {
+								location.href = "{:url('user/info')}";
+							}
+						},
+						complete: function() {
+							//结束loading
+							//$(".loading_box").css("display","none");
+							$("#btn_submit").val("提交");
+						}
+					});
+				});
+			</script>
+		</div>
+	</body>
+</html>

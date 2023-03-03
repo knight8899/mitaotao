@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="zh-Hans-CN">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=0,viewport-fit=cover">
+		<title>历史订单 - 会员中心 -{$maccms.site_name}</title>
+		<meta name="keywords" content="{$maccms.site_keywords}"/>
+		<meta name="description" content="{$maccms.site_description}"/>
+		{include file="system/include"}
+	</head>
+	<body>
+		<div id="app">
+			<div id="container">
+				<div class="top-content rel">
+					<div onclick="javascript:history.back(-1);" class="btn"></div>
+					<h3>历史订单</h3> 
+				</div>
+					<div class="main-content topthree gray">
+						<div class="cube-scroll-wrapper">
+							<div class="cube-scroll-content">
+								<div class="cube-scroll-list-wrapper" style="min-height: 776px;">
+									<div class="list-content">
+										<h4>历史订单</h4>
+										{volist name="list" id="vo"}
+										<div>
+											<p style="display: flex"><span>状态</span>
+												<span>{if condition="$vo.order_status eq 1"}已支付{else}未支付{/if}</span>
+												{if condition="$vo.order_status eq 0"}<a href="{:url('user/pay')}?order_code={$vo.order_code}" style="margin-left: auto;color: #f2342c;font-weight: 700;font-size: 1.2rem;">去支付</a>{/if}
+											</p>
+											<p><span>单号</span><span>{$vo.order_code}</span></p>
+											<p><span>日期</span><span>{$vo.order_time|mac_day}</span></p>
+											<p><span>积分</span><span>{$vo.order_price}</span></p>
+											<p class="money"><span>总额</span><span>{$vo.order_price}</span>元</p>
+										</div>
+										{/volist}
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+			</div>
+			{include file="system/footer"}
+		</div>
+	</body>
+</html>

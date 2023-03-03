@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="zh-Hans-CN">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=0,viewport-fit=cover">
+		<title>会员中心 - {$maccms.site_name}</title>
+		<meta name="keywords" content="{$maccms.site_keywords}">
+		<meta name="description" content="{$maccms.site_description}">
+		{include file="system/include"}
+	</head>
+	<body>
+		<div id="app">
+			<div id="container">
+				<div class="member-content">
+					<div class="member-wrap"><img src="{$maccms.path}MDassets/img/m2.png">
+						<div class="member">
+							<div>游客</div>
+							<div onclick="location.reload();" class="img"></div>
+						</div>
+						<p>登入或注册会员即可多设备同步纪录</p>
+					</div>
+				</div>
+				<div class="main-content gray" style="padding-bottom: calc(4rem + env(safe-area-inset-bottom));">
+					<div class="cube-scroll-wrapper">
+						<div class="cube-scroll-content">
+							<div class="cube-scroll-list-wrapper">
+								<div class="list-content lc1">
+									<div>
+										<div>*</div>
+										<p>邀请人数</p>
+									</div>
+									<span class="line"></span>
+									<div class="">
+										<div>*</div>
+										<p>剩余VIP天数</p>
+									</div>
+								</div>
+								<div class="list-content">
+									<div class="list-item">
+										<div class="img i1"></div>
+										<div class="text">
+											帐号<span class="font-sub-color"> 请先登入或注册会员</span>
+										</div>
+										<div class="right">
+											<a href="{:mac_url('user/login')}" class="btn">
+												注册/登入
+											</a>
+										</div>
+									</div>
+									<a class="list-item not">
+										<div class="img i8"></div>
+										<div class="text">推广分享</div>
+										<div class="right"><span class="font-sub-color">推荐好友注册，VIP送给你！</span>
+											<div class="img"></div>
+										</div>
+									</a>
+									<a class="list-item not">
+										<div class="img i14"></div>
+										<div class="text">卡密兑换</div>
+										<div class="right">
+											<div class="img"></div>
+										</div>
+									</a>
+									<a class="list-item not">
+										<div class="img i13"></div>
+										<div class="text">升级VIP</div>
+										<div class="right">
+											<div class="img"></div>
+										</div>
+									</a>
+									<a class="list-item not">
+										<div class="img i2"></div>
+										<div class="text">绑定帐号</div>
+										<div class="right"><span class="font-sub-color">绑定帐号更安全，可多设备同步纪录</span>
+											<div class="img"></div>
+										</div>
+									</a>
+									<a class="list-item not">
+										<div class="img i15"></div>
+										<div class="text">观看纪录</div>
+										<div class="right">
+											<div class="img"></div>
+										</div>
+									</a>
+									<a class="list-item not">
+										<div class="img i4"></div>
+										<div class="text">历史订单</div>
+										<div class="right">
+											<div class="img"></div>
+										</div>
+									</a>
+									<a href="{$mdym.group}" target="_blank" rel="noopener noreferrer" class="list-item">
+										<div class="img i7"></div>
+										<div class="text">看片福利群</div>
+										<div class="right">
+											<div class="img"></div>
+										</div>
+									</a>
+									<a href="mailto:{$mdym.email}" target="_blank" rel="noopener noreferrer" class="list-item">
+										<div class="img i11"></div>
+										<div class="text">问题建议</div>
+										<div class="right"><span class="font-sub-color">{$mdym.email}</span>
+											<div class="img"></div>
+										</div>
+									</a>
+									<a href="{:mac_url('label/policy')}" class="list-item">
+										<div class="img i12"></div>
+										<div class="text">政策条款</div>
+										<div class="right">
+											<div class="img"></div>
+										</div>
+									</a>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="cube-popup cube-popup_mask cube-dialog" style="z-index: 100;display:none;" id="not_popup">
+					<div class="cube-popup-mask"></div>
+					<div class="cube-popup-container cube-popup-center">
+						<div class="cube-popup-content">
+							<div class="cube-dialog-main">
+								<div class="cube-dialog-confirm">
+									<h2 class="cube-dialog-title">
+										<div class="info-title">注册会员限定功能</div>
+									</h2>
+									<div class="cube-dialog-content">
+										<p class="info-des">请先登入或注册会员后即可使用此功能</p>
+									</div>
+									<div class="cube-dialog-btns border-right-1px">
+										<a id="not_close" class="cube-dialog-btn border-top-1px">先看看</a>
+										<a href="{:mac_url('user/login')}" class="cube-dialog-btn border-top-1px cube-dialog-btn_highlight">即刻登入</a>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			{include file="system/footer"}
+			<script>
+				if (MAC.Cookie.Get('user_id') != undefined && MAC.Cookie.Get('user_id') != '{:mac_url('user/index')}') {
+					window.location.href = "{:mac_url('user/index')}";
+				}
+			</script>
+		</div>
+	</body>
+</html>

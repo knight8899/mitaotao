@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="zh-Hans-CN">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=0,viewport-fit=cover">
+		<title>{$param.wd}{$param.actor}{$param.director}{$param.area}{$param.lang}{$param.year}{$param.class}搜索结果 - {$maccms.site_name}</title>
+		<meta name="keywords" content="{$param.wd}{$param.actor}{$param.director}{$param.area}{$param.lang}{$param.year}{$param.class}搜索结果">
+		<meta name="description" content="{$param.wd}{$param.actor}{$param.director}{$param.area}{$param.lang}{$param.year}{$param.class}搜索结果">
+		{include file="system/include"}
+	</head>
+	<body>
+		<div id="app">
+			<div id="container">
+				<div class="tab-wrapper">
+					<header>
+						<div class="top-content rel">
+							<div onclick="javascript:history.back(-1);" class="btn"></div>
+							<h3>搜索结果</h3>
+						</div>
+						<div class="cube-tab-bar">
+							<div class="cube-taber cube-tab_active on"><i class=""></i>
+								<div>{$param.wd}{$param.actor}{$param.director}{$param.area}{$param.lang}{$param.year}{$param.class}{$param.tag}<span> 
+								(<strong class="mac_total"></strong>)</span>
+								</div>
+							</div>
+						</div>
+					</header>
+					<div class="main-content top">
+						<div class="cube-slide">
+							<div class="cube-slide-group">
+								<div class="cube-slide-item">
+									<div class="cube-scroll-wrapper pageScroll">
+										<div class="cube-scroll-content">
+											<div class="cube-scroll-list-wrapper" style="min-height: 677px; pointer-events: auto;">
+												<div class="video-group">
+													<div class="video-wrap long" id="content">
+														{maccms:vod type="'.($mdym['type']['one']).'" num="20" paging="yes" pageurl="vod/search" order="desc" by="time"}
+														{include file="module/vodlistthree"}
+														{/maccms:vod}
+													</div>
+													{include file="module/more"}
+												</div>
+											</div>
+											{include file="module/gone"}
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			{include file="system/footer"}
+			<script>
+				$('.mac_total').html('{$__PAGING__.record_total}');
+			</script>
+		</div>
+	</body>
+</html>

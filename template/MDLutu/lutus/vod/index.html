@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="zh-Hans-CN">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=0,viewport-fit=cover">
+		<title>{$maccms.site_name}</title>
+		<meta name="keywords" content="{$maccms.site_keywords}">
+		<meta name="description" content="{$maccms.site_description}">
+		{include file="system/include"}
+	</head>
+	<body>
+		<div id="app">
+			<div id="container">
+				<div class="tab-wrapper">
+					{include file="system/headertwo"}
+					<div class="main-content top">
+						<div class="cube-slide">
+							<div class="cube-slide-group">
+								<div class="cube-slide-item">
+									<div class="cube-scroll-wrapper pageScroll">
+										<div class="cube-scroll-content">
+											<div class="cube-scroll-list-wrapper" style="min-height: 677px;">
+												{include file="module/searchtwo"}
+												{include file="module/announce"}
+												<div class="video-group">
+												{include file="module/bannertwo"}
+														<div class="mix-wrapper">
+															<div class="title-content">
+																<h3>最新影片</h3>
+																<div class="right">
+																	<a href="{:mac_url('label/newtwo')}" class="r-btn">查看更多 &gt;</a>
+																</div>
+															</div>
+															<div class="video-mix-wrap">
+																<div class="video-wrap short madouym">
+																	{maccms:vod num="6" type="'.($mdym['type']['two']).'" by="time" order="desc"}
+																	{include file="module/vodlist7"}
+																	{/maccms:vod}
+																	{maccms:vod num="6" type="'.($mdym['type']['two']).'" start="7" by="time" order="desc"}
+																	{include file="module/vodlist8"}
+																	{/maccms:vod}
+																	{maccms:vod num="6" type="'.($mdym['type']['two']).'" start="13" by="time" order="desc"}
+																	{include file="module/vodlist9"}
+																	{/maccms:vod}
+																</div>
+																<div class="more-btn MdBatch">换一换</div>
+															</div>
+														</div>
+														<div class="mix-wrapper">
+															<div class="title-content">
+																<h3>热门排行</h3>
+																<div class="right">
+																	<a href="{:mac_url('label/hottwo')}" class="r-btn">查看更多 &gt;</a>
+																</div>
+															</div>
+															<div class="video-mix-wrap">
+																<div class="video-wrap short madouym">
+																	{maccms:vod num="6" type="'.($mdym['type']['two']).'" by="hits" order="desc"}
+																	{include file="module/vodlist7"}
+																	{/maccms:vod}
+																	{maccms:vod num="6" type="'.($mdym['type']['two']).'" start="7" by="hits" order="desc"}
+																	{include file="module/vodlist8"}
+																	{/maccms:vod}
+																	{maccms:vod num="6" type="'.($mdym['type']['two']).'" start="13" by="hits" order="desc"}
+																	{include file="module/vodlist9"}
+																	{/maccms:vod}
+																</div>
+																<div class="more-btn MdBatch">换一换</div>
+															</div>
+														</div>
+														{maccms:type ids="'.($mdym['type']['two']).'" order="asc" by="sort" id="vo1" key="key1"}
+														{maccms:type parent="'.$vo1['type_id'].'" order="asc" by="sort" id="vo2" key="key2"} 
+														<div class="mix-wrapper">
+															<div class="title-content">
+																<h3>{$vo2.type_name}</h3>
+																<div class="right">
+																	<a href="{:mac_url_type($vo2)}" class="r-btn">查看更多 &gt;</a>
+																</div>
+															</div>
+															<div class="video-mix-wrap">
+																<div class="video-wrap short madouym">
+																	{maccms:vod num="7" type="'.$vo2['type_id'].'" order="desc" by="time" id="vo3" key="key3"}
+																	{include file="module/vodlist10"}
+																	{/maccms:vod}
+																	{maccms:vod num="7" type="'.$vo2['type_id'].'" start="8" order="desc" by="time" id="vo3" key="key3"}
+																	{include file="module/vodlist11"}
+																	{/maccms:vod}
+																	{maccms:vod num="7" type="'.$vo2['type_id'].'" start="15" order="desc" by="time" id="vo3" key="key3"}
+																	{include file="module/vodlist12"}
+																	{/maccms:vod}
+																</div>
+																<div class="more-btn MdBatch">换一换</div>
+															</div>
+														</div>
+														{/maccms:type}	
+														{/maccms:type}
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			{include file="system/footer"}
+		</div>
+	</body>
+</html>

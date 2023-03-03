@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="zh-Hans-CN">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=0,viewport-fit=cover">
+		<title>兑换VIP - {$maccms.site_name}</title>
+		<meta name="keywords" content="兑换VIP - {$maccms.site_keywords}">
+		<meta name="description" content="兑换VIP - {$maccms.site_description}">
+		{include file="system/include"}
+	</head>
+	<body>
+		<div id="app">
+			<div id="containertwo">
+				<div class="top-content">
+					<div onclick="javascript:history.back(-1);" class="btn"></div>
+					<h3>兑换VIP</h3>
+				</div>
+				<div class="main-content toptwo">
+					<div class="cube-scroll-wrapper">
+						<div class="cube-scroll-content">
+							<div class="cube-scroll-list-wrapper" style="min-height: 0px; pointer-events: auto;">
+								<div class="info-content" style="padding: 20px;">
+									<p class="point">
+										VIP :
+										<span class="text">{$obj.user_points}</span> 点
+									</p>
+									<p class="info">（只支持兑换一天）</p>
+									<div class="option">
+										<span>兑换天数</span> 
+										<select>
+											<option>1天</option>
+										</select>
+									</div>
+									{volist name="group_list" id="vo"}
+									{if condition="$vo.group_id gt 2 && $vo.group_status eq 1"}
+									<div class="form-btn grade day" data-id="{$vo.group_id}" data-name="1" data-points="{$vo.group_points_day}" data-long="day">
+										兑换VIP
+									</div>
+									{/if}
+									{/volist}
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			{include file="system/footer"}
+			<script>
+				$('.grade').click(function(){
+					var that=$(this);
+					var group_id = that.attr('data-id');
+					var group_name = that.attr('data-name');
+					var long = that.attr('data-long');
+					var points = that.attr('data-points');
+			
+					if(confirm('确定要兑换【'+group_name+'】天会员吗,需要花费【'+points+'】积分')) {
+						$.ajax({
+							url: "{:url('user/upgrade')}",
+							type: "post",
+							dataType: "json",
+							data: {group_id: group_id,long:long },
+							beforeSend: function () {
+								$("#btn_submit").val("loading...");
+							},
+							success: function (r) {
+								layer.msg(r.msg);
+								if (r.code == 1) {
+									location.reload();
+								}
+							},
+							complete: function () {
+								$("#btn_submit").val("提交");
+							}
+						});
+					}
+				});
+			</script>
+		</div>
+	</body>
+</html>

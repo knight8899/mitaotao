@@ -1,0 +1,17 @@
+<div class="col-style {if$key3 == '1'}col-style-1{else}col-style-2{/if} horizontal mdym1">
+																		<div class="videoBox">
+																			<div class="videoBox-content">
+																				<a href="{:mac_url_vod_play($vo3)}" class="videoBox-cover" style="background-image: url({:mac_url_img($vo3.vod_pic)});"></a>
+																				<div onclick="favs({$v3.vod_id})" class="collect"></div>
+																				<div class="videoBox-bottom">
+																					<div class="video-time">{$vo3.vod_duration|mac_default='00:00'}</div>
+																				</div>
+																				{if condition="$vo3.vod_level eq '6'"}
+																				<div class="video-tag vip">VIP</div>
+																				{/if}
+																			</div>
+																			<div class="videoBox-info">
+																				<h4>{$vo3.vod_name}</h4>
+																			</div>
+																		</div>
+																	</div>

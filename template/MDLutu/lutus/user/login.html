@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="zh-Hans-CN">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=0,viewport-fit=cover">
+		<title>用户登录 - {$maccms.site_name}</title>
+		<meta name="keywords" content="{$maccms.site_keywords}">
+		<meta name="description" content="{$maccms.site_description}">
+		{include file="system/include"}
+	</head>
+	<body>
+		<div id="app">
+			<div id="containertwo">
+				<div class="top-content">
+					<div onclick="javascript:history.back(-1);" class="btn"></div>
+					<h3>用户登录</h3>
+				</div>
+				<div class="main-content toptwo">
+					<form method="POST" id="fm">
+						<div class="form-content">
+							<div>账号</div> <input type="email" id="user_name" name="user_name" placeholder="请输入您的用户名" required="required">
+							<div>密码</div> <input type="password" id="user_pwd" name="user_pwd" placeholder="请输入密码(6位以上)" required="required">
+							{if condition="$GLOBALS['config']['user']['login_verify'] eq 1"}
+							<div>验证码</div>
+							<div class="form-sub-content">
+								<input type="text" id="verify" name="verify" placeholder="请输入验证码" required="required"> 
+								<img class="sm-btn" id="verify_img" src="{:url('verify/index')}" onClick="this.src=this.src+'?'" alt="单击刷新" />
+							</div>
+							{/if}
+							<input type="button" id="btn_submit" class="form-btn" value="登录">
+						</div> 
+					</form>
+					<div class="form-bottom-content">
+						<a href="{:mac_url('user/reg')}" class="">尚未注册</a>
+						<p>|</p> 
+						<a href="{:mac_url('user/findpass')}" class="">忘记密码</a>
+					</div>
+				</div>
+			</div>
+			{include file="system/footer"}
+			<script type="text/javascript">
+			$(function() {
+				$("body").bind('keyup', function(event) {
+					if (event.keyCode == 13) {
+						$('#btnLogin').click();
+					}
+				});
+				$('#btn_submit').click(function() {
+					if ($('#user_name').val() == '') {
+						layer.msg('请输入用户名');
+						$("#user_name").focus();
+						return false;
+					}
+					if ($('#user_pwd').val() == '') {
+						layer.msg('请输入密码');
+						$("#user_pwd").focus();
+						return false;
+					}
+					if ($('#verify').length > 0 && $('#verify').val() == '') {
+						layer.msg('请输入验证码');
+						$("#verify").focus();
+						return false;
+					}
+
+					$.ajax({
+						url: "{:url('user/login')}",
+						type: "post",
+						dataType: "json",
+						data: $('#fm').serialize(),
+						beforeSend: function() {
+							$("#btn_submit").val("loading...");
+						},
+						success: function(r) {
+							if (r.code == 1) {
+								layer.msg('登录成功');
+								location.href = "{:url('user/index')}";
+							} else {
+								layer.msg(r.msg);
+								$('#verify_img').click();
+							}
+						},
+						complete: function() {
+							$("#btn_submit").val("立即登录");
+						}
+					});
+
+				});
+			});
+		</script>
+		</div>
+	</body>
+</html>
